@@ -1,0 +1,6 @@
+apiVersion: v2
+name: ejemplo-helm
+description: Un chart de ejemplo para ArgoCD
+type: application
+version: 0.1.0
+appVersion: "1.0"
