@@ -1,0 +1,16 @@
+service:
+  name: ejemplo-service
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+app:
+  name: ejemplo
+  namespace: demo-argocd
+
+replicaCount: 1
+
+image:
+  repository: nginx
+  tag: "1.25.2"
+  pullPolicy: IfNotPresent

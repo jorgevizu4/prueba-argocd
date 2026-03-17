@@ -13,4 +13,4 @@ service:
 
 app:
   name: ejemplo
-  namespace: argocd-prueba
+  namespace: demo-argocd

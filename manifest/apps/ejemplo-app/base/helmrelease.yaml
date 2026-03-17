@@ -2,7 +2,7 @@ apiVersion: helm.toolkit.argoproj.io/v2
 kind: HelmRelease
 metadata:
   name: hipstershop
-  namespace: argocd-prueba
+  namespace: demo-argocd
 spec:
   project: default
   sources:
@@ -17,7 +17,7 @@ spec:
       ref: values  
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd-prueba
+    namespace: demo-argocd
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

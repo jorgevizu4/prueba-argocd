@@ -10,10 +10,10 @@ spec:
   source:
     repoURL: https://github.com/jorgevizu4/prueba-argocd.git
     targetRevision: main
-    path: ./manifest/apps/__overlays
+    path: charts/ejemplo-app
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd-prueba
+    namespace: demo-argocd
   syncPolicy:
     automated:
       prune: true
