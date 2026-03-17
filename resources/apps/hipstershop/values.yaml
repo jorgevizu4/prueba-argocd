@@ -4,7 +4,6 @@
  
 # Values para shippingservice
 shippingservice:
-  enabled: true
   replicaCount: 1
   image:
     repository: gcr.io/google-samples/microservices-demo/shippingservice
@@ -33,7 +32,6 @@ shippingservice:
  
 # Values para redis-cart
 redis-cart: 
-  enabled: true
   replicaCount: 1
   image:
     repository: redis
@@ -63,7 +61,6 @@ redis-cart:
  
 # Values para recommendationservice
 recommendationservice:
-  enabled: true
   replicaCount: 1
   image:
     repository: gcr.io/google-samples/microservices-demo/recommendationservice
@@ -92,7 +89,6 @@ recommendationservice:
  
 # Values para productcatalogservice
 productcatalogservice:
-  enabled: true
   replicaCount: 1
   image:
     repository: gcr.io/google-samples/microservices-demo/productcatalogservice
@@ -121,7 +117,6 @@ productcatalogservice:
  
 # Values para paymentservice
 paymentservice:
-  enabled: true
   replicaCount: 1
   image:
     repository: gcr.io/google-samples/microservices-demo/paymentservice
@@ -150,7 +145,6 @@ paymentservice:
  
 # Values para loadgenerator
 loadgenerator:
-  enabled: true
   replicaCount: 1
   image:
     repository: gcr.io/google-samples/microservices-demo/loadgenerator
@@ -197,7 +191,6 @@ loadgenerator:
  
 # Values para frontend
 frontend:
-  enabled: true
   replicaCount: 1
   image:
     repository: gcr.io/google-samples/microservices-demo/frontend
@@ -226,7 +219,6 @@ frontend:
  
 # Values para emailservice
 emailservice:
-  enabled: true
   replicaCount: 1
   image:
     repository: gcr.io/google-samples/microservices-demo/emailservice
@@ -255,7 +247,6 @@ emailservice:
  
 # Values para currencyservice
 currencyservice:
-  enabled: true
   replicaCount: 1
   image:
     repository: gcr.io/google-samples/microservices-demo/currencyservice
@@ -284,7 +275,6 @@ currencyservice:
  
 # Values para checkoutservice
 checkoutservice:
-  enabled: true
   replicaCount: 1
   image:
     repository: gcr.io/google-samples/microservices-demo/checkoutservice
@@ -313,7 +303,6 @@ checkoutservice:
  
 # Values para cartservice
 cartservice:
-  enabled: true
   replicaCount: 1
   image:
     repository: gcr.io/google-samples/microservices-demo/cartservice
@@ -342,7 +331,6 @@ cartservice:
  
 # Values para adservice
 adservice:
-  enabled: true
   replicaCount: 1
   image:
     repository: gcr.io/google-samples/microservices-demo/adservice
