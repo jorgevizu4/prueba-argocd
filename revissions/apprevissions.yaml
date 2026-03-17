@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/jorgevizu4/prueba-argocd
-    path: manifests/apps/__overlays
+    path: manifests/apps/__overlays/kustomization.yaml
     targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'
