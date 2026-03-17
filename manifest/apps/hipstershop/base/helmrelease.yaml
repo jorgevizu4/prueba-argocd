@@ -20,8 +20,4 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-      - ServerSideApply=true
-      - ApplyOutOfSyncOnly=true
-      - RespectIgnoreDifferences=true
-      - Replace=false
   revisionHistoryLimit: 3
