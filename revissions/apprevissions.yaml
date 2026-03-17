@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: prueba-argocd-app
   namespace: demo-argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
