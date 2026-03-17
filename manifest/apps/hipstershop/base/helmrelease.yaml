@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/jorgevizu4/prueba-argocd
-    path: charts/hipstershop
+    path: charts/hipstershop/helm
     targetRevision: main
     helm:
       valueFiles:
