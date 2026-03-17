@@ -1,23 +1,43 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ .Values.app.name }}
-  namespace: {{ .Values.app.namespace }}
-  labels:
-    app: {{ .Values.app.name }}
-spec:
-  replicas: {{ .Values.replicaCount }}
-  selector:
-    matchLabels:
-      app: {{ .Values.app.name }}
-  template:
-    metadata:
-      labels:
-        app: {{ .Values.app.name }}
-    spec:
-      containers:
-        - name: {{ .Values.app.name }}
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - containerPort: {{ .Values.service.targetPort }}
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: {{ .Values.app.name }}
+#   namespace: {{ .Values.app.namespace }}
+#   labels:
+#     app: {{ .Values.app.name }}
+# spec:
+#   replicas: {{ .Values.replicaCount }}
+#   selector:
+#     matchLabels:
+#       app: {{ .Values.app.name }}
+#   template:
+#     metadata:
+#       labels:
+#         app: {{ .Values.app.name }}
+#     spec:
+#       containers:
+#         - name: {{ .Values.app.name }}
+#           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+#           imagePullPolicy: {{ .Values.image.pullPolicy }}
+#           ports:
+#             - containerPort: {{ .Values.service.targetPort }}
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: ejemplo-deployment 
+  namespace: argocd-prueba 
+  labels: 
+    app: ejemplo 
+spec: 
+  replicas: 1 
+  selector: 
+    matchLabels: 
+      app: ejemplo 
+    template: 
+      metadata: 
+        labels: 
+          app: ejemplo 
+      spec: 
+        containers: 
+        - name: nginx 
+          image: nginx:1.25.2 
