@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/jorgevizu4/prueba-argocd
-    path: charts/ejemplo-app
+    path: prueba-argocd/charts/ejemplo-app
     targetRevision: main
     helm:
       valueFiles:
