@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: 
+metadata:
+  name: prueba-argocd-app
+  namespace: argocd-prueba
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/jorgevizu4/prueba-argocd.git
+    targetRevision: main
+    path: manifest/apps/__overlays
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd-prueba
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.argoproj.io/v2
+kind: HelmRelease
+metadata:
+  name: hipstershop
+  namespace: argocd-prueba
+spec:
+  project: default
+  sources:
+    - repoURL: ./charts/ejemplo-app
+      chart: ejemplo-app
+      targetRevision: 0.1.0
+      helm:
+        valueFiles:
+          - $values/resources/apps/ejemplo-app/values.yaml
+    - repoURL:
+      targetRevision: main
+      ref: values  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd-prueba
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+      - ApplyOutOfSyncOnly=true
+      - RespectIgnoreDifferences=true
+      - Replace=false
+  revisionHistoryLimit: 3
