@@ -6,7 +6,7 @@ service:
 
 app:
   name: ejemplo
-  namespace: demo-argocd
+  namespace: argocd
 
 replicaCount: 1
 
