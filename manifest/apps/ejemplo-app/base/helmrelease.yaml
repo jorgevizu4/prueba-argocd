@@ -1,5 +1,5 @@
 apiVersion: helm.toolkit.argoproj.io/v2
-kind: HelmRelease
+kind: Application
 metadata:
   name: hipstershop
   namespace: demo-argocd

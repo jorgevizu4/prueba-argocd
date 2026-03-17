@@ -1,18 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
-kind: 
+kind: Application
 metadata:
   name: prueba-argocd-app
-  namespace: argocd-prueba
+  namespace: demo-argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: https://github.com/jorgevizu4/prueba-argocd.git
+    repoURL: 'https://github.com/jorgevizu4/prueba-argocd.git'
+    path: manifests/apps/__overlays
     targetRevision: main
-    path: charts
   destination:
-    server: https://kubernetes.default.svc
+    server: 'https://kubernetes.default.svc'
     namespace: demo-argocd
   syncPolicy:
     automated:
