@@ -5,16 +5,13 @@ metadata:
   namespace: demo-argocd
 spec:
   project: default
-  sources:
-    - repoURL: charts/ejemplo-app
-      chart: ejemplo-app
-      targetRevision: 0.1.0
-      helm:
-        valueFiles:
-          - $values/resources/apps/ejemplo-app/values.yaml
-    - repoURL:
-      targetRevision: main
-      ref: values  
+  source:
+    repoURL: https://github.com/jorgevizu4/prueba-argocd
+    path: charts/ejemplo-app
+    targetRevision: main
+    helm:
+      valueFiles:
+        - $values/resources/apps/ejemplo-app/values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: demo-argocd
