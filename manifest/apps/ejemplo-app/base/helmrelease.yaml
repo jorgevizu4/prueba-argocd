@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.argoproj.io/v2
 kind: Application
 metadata:
-  name: hipstershop
+  name: ejemplo-app
   namespace: demo-argocd
 spec:
   project: default
