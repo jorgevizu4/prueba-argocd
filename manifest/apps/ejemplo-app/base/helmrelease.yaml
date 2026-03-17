@@ -2,21 +2,24 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: ejemplo-app
-  namespace: demo-argocd
+  namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
-  source:
-    repoURL: https://github.com/jorgevizu4/prueba-argocd
-    path: prueba-argocd/charts/ejemplo-app
-    targetRevision: main
-    helm:
-      valueFiles:
-        - $values/resources/apps/ejemplo-app/values.yaml
+  sources:
+    - repoURL: https://github.com/jorgevizu4/prueba-argocd
+      path: charts/ejemplo-app
+      targetRevision: main
+      helm:
+        valueFiles:
+          - $values/resources/apps/ejemplo-app/values.yaml
+    - repoURL: https://github.com/jorgevizu4/prueba-argocd
+      targetRevision: main
+      ref: values
   destination:
     server: https://kubernetes.default.svc
-    namespace: demo-argocd
+    namespace: argocd
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
