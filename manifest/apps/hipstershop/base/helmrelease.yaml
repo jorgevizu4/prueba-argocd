@@ -23,6 +23,5 @@ spec:
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-      - PruneLast=true
       - AutoPrune=true
   revisionHistoryLimit: 3
