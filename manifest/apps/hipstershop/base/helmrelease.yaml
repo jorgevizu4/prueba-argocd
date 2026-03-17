@@ -1,4 +1,4 @@
-apiVersion: helm.toolkit.argoproj.io/v2
+apiVersion: agroproj.io/v1alpha1
 kind: Application
 metadata:
   name: hipstershop
