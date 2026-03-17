@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/jorgevizu4/prueba-argocd.git'
+    repoURL: https://github.com/jorgevizu4/prueba-argocd
     path: manifests/apps/__overlays
     targetRevision: main
   destination:
