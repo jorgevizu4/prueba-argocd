@@ -41,22 +41,22 @@ spec:
         #   value: "jaeger-collector:14268"
           startupProbe:
             exec:
-              command: ["/bin/grpc_health_probe", "-addr=:9555", "-connect-timeout=5s", "-rpc-timeout=5s"]
+              command: ["/bin/grpc_health_probe", "-addr=:9555", "-connect-timeout=3s", "-rpc-timeout=3s"]
             failureThreshold: 30
             periodSeconds: 5
-            timeoutSeconds: 5
+            timeoutSeconds: 10
           livenessProbe:
             initialDelaySeconds: 20
             periodSeconds: 15
-            timeoutSeconds: 5
+            timeoutSeconds: 10
             exec:
-              command: ["/bin/grpc_health_probe", "-addr=:9555", "-connect-timeout=5s", "-rpc-timeout=5s"]
+              command: ["/bin/grpc_health_probe", "-addr=:9555", "-connect-timeout=3s", "-rpc-timeout=3s"]
           readinessProbe:
             initialDelaySeconds: 20
             periodSeconds: 15
-            timeoutSeconds: 5
+            timeoutSeconds: 10
             exec:
-              command: ["/bin/grpc_health_probe", "-addr=:9555", "-connect-timeout=5s", "-rpc-timeout=5s"]
+              command: ["/bin/grpc_health_probe", "-addr=:9555", "-connect-timeout=3s", "-rpc-timeout=3s"]
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
