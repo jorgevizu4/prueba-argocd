@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: ejemplo-app
-  namespace: argocd
+  namespace: ejemplo-app-demo
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -19,7 +19,7 @@ spec:
       ref: values
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: ejemplo-app-demo
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

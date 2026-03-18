@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: hipstershop
-  namespace: argocd
+  namespace: hipstershop-demo
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -19,7 +19,7 @@ spec:
       ref: values
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: hipstershop-demo
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
