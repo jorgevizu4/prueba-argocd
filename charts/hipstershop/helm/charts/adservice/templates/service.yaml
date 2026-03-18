@@ -7,7 +7,7 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   selector:
-    app: 
+    # app: 
   ports:
     - port: {{ .Values.service.port }}
       targetPort: 9555
