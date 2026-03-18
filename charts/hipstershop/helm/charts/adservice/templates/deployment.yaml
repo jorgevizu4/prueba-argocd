@@ -39,6 +39,11 @@ spec:
         #   value: "1"
         # - name: JAEGER_SERVICE_ADDR
         #   value: "jaeger-collector:14268"
+          startupProbe:
+            exec:
+              command: ["/bin/grpc_health_probe", "-addr=:9555"]
+            failureThreshold: 30
+            periodSeconds: 5
           livenessProbe:
             initialDelaySeconds: 20
             periodSeconds: 15
