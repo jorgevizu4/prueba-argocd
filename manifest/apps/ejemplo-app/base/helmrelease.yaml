@@ -21,6 +21,9 @@ spec:
     server: https://kubernetes.default.svc
     namespace: ejemplo-app-demo
   syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
   revisionHistoryLimit: 3
