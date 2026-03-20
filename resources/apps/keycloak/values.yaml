@@ -56,6 +56,12 @@ keycloakConfigCli:
           - name: app-user
           - name: app-admin
 
+        client:
+          frontend-app:
+            - name: read
+            - name: write
+            - name: admin
+            
       clients:
         - clientId: frontend-app
           name: Frontend App
@@ -74,7 +80,3 @@ keycloakConfigCli:
             - roles
           optionalClientScopes:
             - offline_access
-          roles:
-          - name: read
-          - name: write
-          - name: admin
