@@ -7,6 +7,7 @@ auth:
   adminPassword: jorgevizuete
 
 postgresql:
+  fullnameOverride: postgresql
   image:
     repository: bitnamilegacy/postgresql
     tag: 16-debian-12
