@@ -24,7 +24,7 @@ postgresql:
     image:
       repository: bitnamilegacy/postgres-exporter
       tag: 0.17.1-debian-12-r15
-      
+
 extraEnvVars:
 - name: KEYCLOAK_DATABASE_HOST
   value: postgresql
@@ -74,26 +74,7 @@ keycloakConfigCli:
             - roles
           optionalClientScopes:
             - offline_access
-
-      clientScopes:
-        - name: roles
-          protocol: openid-connect
-
-      users:
-        - username: myuser
-          enabled: true
-          emailVerified: true
-          firstName: Jorge
-          lastName: Vizuete
-          credentials:
-            - type: password
-              value: jorgevizuete
-              temporary: false
-          realmRoles:
-            - app-user
-
-      clientRoles:
-        frontend-app:
+          roles:
           - name: read
           - name: write
           - name: admin
