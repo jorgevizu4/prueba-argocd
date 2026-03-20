@@ -6,6 +6,10 @@ auth:
   adminUser: admin
   adminPassword: jorgevizuete
 
+extraEnvVars:
+  - name: KEYCLOAK_DATABASE_HOST
+    value: keycloak-postgresql
+
 postgresql:
   image:
     repository: bitnamilegacy/postgresql
