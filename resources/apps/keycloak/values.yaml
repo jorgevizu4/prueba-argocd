@@ -6,6 +6,11 @@ auth:
   adminUser: admin
   adminPassword: jorgevizuete
 
+postgresql:
+  image:
+    repository: bitnamilegacy/postgresql
+    tag: 17.6.0-debian-12-r0
+
 keycloakConfigCli:
   enabled: true
   backoffLimit: 3
