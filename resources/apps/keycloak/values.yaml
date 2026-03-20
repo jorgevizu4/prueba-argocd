@@ -6,21 +6,25 @@ auth:
   adminUser: admin
   adminPassword: jorgevizuete
 
-extraEnvVars:
-  - name: KEYCLOAK_DATABASE_HOST
-    value: keycloak-postgresql
-
 postgresql:
   image:
     repository: bitnamilegacy/postgresql
     tag: 17.6.0-debian-12-r0
+  volumePermissions:
+    image:
+      repository: bitnamilegacy/os-shell
+      tag: 12-debian-12-r50
+  metrics:
+    image:
+      repository: bitnamilegacy/postgres-exporter
+      tag: 0.17.1-debian-12-r15
 
 keycloakConfigCli:
   enabled: true
   backoffLimit: 3
   image:
     repository: bitnamilegacy/keycloak-config-cli
-    tag: 6.4.0-debian-12-r10
+    tag: 6.4.0-debian-12-r11
   configuration:
     demo-realm.yaml: |
       realm: demo
