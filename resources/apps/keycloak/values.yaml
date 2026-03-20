@@ -7,6 +7,11 @@ auth:
   adminPassword: jorgevizuete
 
 postgresql:
+  enabled: true
+  auth:
+    username: jorge
+    password: jorgevizuete
+    database: keycloakdb
   fullnameOverride: postgresql
   image:
     repository: bitnamilegacy/postgresql
