@@ -1,0 +1,2 @@
+resources/apps/keycloak/secrets.yaml
+*.dec.yaml

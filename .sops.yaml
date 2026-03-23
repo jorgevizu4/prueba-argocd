@@ -1,0 +1,4 @@
+creation_rules:
+  - path_regex: resources/apps/keycloak/.*\.ya?ml$
+    encrypted_regex: '^(data|stringData)$'
+    age: age1y9rrfg6jq0qwveuja6xl2jcv5yuf5lytra87r5pdvu5x4a25s4wskd6l4h
