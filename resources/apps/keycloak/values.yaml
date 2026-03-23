@@ -1,82 +1,97 @@
+# ─── Imagen principal de Keycloak ────────────────────────────────────────────
 image:
-  repository: bitnamilegacy/keycloak
-  tag: 26.3.2-debian-12-r1
+  repository: bitnamilegacy/keycloak   # Repo legacy de Bitnami (el repo bitnami/* quedó privado desde ago-2025)
+  tag: 26.3.2-debian-12-r1             # Tag exacto de la imagen; corresponde a Keycloak 26.3.2 sobre Debian 12
 
+# ─── Credenciales del admin de Keycloak ──────────────────────────────────────
 auth:
-  adminUser: admin
-  adminPassword: jorgevizuete
+  adminUser: admin          # Usuario administrador del realm "master" (consola de admin)
+  adminPassword: ""          # Se deja vacío para no guardar la contraseña en Git
+  existingSecret: keycloak-auth-secret  # Secret existente con la contraseña del admin
+  passwordSecretKey: admin-password     # Key dentro del secret que contiene la contraseña del admin
 
+# ─── Subchart de PostgreSQL embebido ─────────────────────────────────────────
 postgresql:
-  enabled: true
+  enabled: true   # Despliega PostgreSQL como subchart; si fuera false habría que usar externalDatabase.*
   auth:
-    username: jorge
-    password: jorgevizuete
-    database: keycloakdb
-  fullnameOverride: postgresql
+    username: jorge        # Usuario de BD que creará PostgreSQL al arrancar
+    password: ""           # Se deja vacío para no guardar la contraseña en Git
+    existingSecret: keycloak-postgresql-secret  # Secret existente con credenciales de PostgreSQL
+    secretKeys:
+      userPasswordKey: password      # Key del password del usuario `username`
+      adminPasswordKey: postgres-password  # Key del password del usuario postgres
+    database: keycloakdb   # Nombre de la base de datos que se creará automáticamente al iniciar
+  fullnameOverride: postgresql  # Fuerza que el Service de PostgreSQL se llame "postgresql" (sin prefijo del release);
+                                # esto es lo que permite resolver el hostname "postgresql" desde Keycloak
   image:
-    repository: bitnamilegacy/postgresql
-    tag: 16-debian-12
+    repository: bitnamilegacy/postgresql  # Repo legacy de Bitnami para PostgreSQL
+    tag: 16-debian-12                     # Tag de PostgreSQL 16 sobre Debian 12
   volumePermissions:
     image:
-      repository: bitnamilegacy/os-shell
-      tag: 12-debian-12-r50
+      repository: bitnamilegacy/os-shell  # Imagen del init container que ajusta permisos del volumen
+      tag: 12-debian-12-r50               # Tag de esa imagen de utilidades de shell
   metrics:
     image:
-      repository: bitnamilegacy/postgres-exporter
-      tag: 0.17.1-debian-12-r15
+      repository: bitnamilegacy/postgres-exporter  # Imagen del sidecar de métricas Prometheus (solo activo si metrics.enabled=true)
+      tag: 0.17.1-debian-12-r15                    # Tag del exporter de PostgreSQL
 
+# ─── Variables de entorno extra inyectadas en el pod de Keycloak ─────────────
 extraEnvVars:
-- name: KEYCLOAK_DATABASE_HOST
-  value: postgresql
-- name: KEYCLOAK_DATABASE_PORT
+- name: KEYCLOAK_DATABASE_HOST      # Host de PostgreSQL que usa el script de arranque de Bitnami
+  value: postgresql                 # Coincide con el Service cuyo nombre definimos en fullnameOverride
+- name: KEYCLOAK_DATABASE_PORT      # Puerto de PostgreSQL
   value: "5432"
-- name: KEYCLOAK_DATABASE_USER
+- name: KEYCLOAK_DATABASE_USER      # Usuario de BD que Keycloak usará para conectarse
   value: jorge
-- name: KEYCLOAK_DATABASE_PASSWORD
-  value: jorgevizuete
-- name: KEYCLOAK_DATABASE_NAME
+- name: KEYCLOAK_DATABASE_PASSWORD  # Contraseña de ese usuario (en producción, usar secretKeyRef)
+  valueFrom:
+    secretKeyRef:
+      name: keycloak-postgresql-secret
+      key: password
+- name: KEYCLOAK_DATABASE_NAME      # Nombre de la base de datos a la que se conectará Keycloak
   value: keycloakdb
 
+# ─── Job de bootstrap automático de realms (keycloak-config-cli) ─────────────
 keycloakConfigCli:
-  enabled: true
-  backoffLimit: 3
+  enabled: true       # Habilita el Job post-install/post-upgrade que importa la configuración de realms
+  backoffLimit: 3     # Número de reintentos del Job antes de marcarlo como fallido
   image:
-    repository: bitnamilegacy/keycloak-config-cli
-    tag: 6.4.0-debian-12-r11
+    repository: bitnamilegacy/keycloak-config-cli  # Imagen de la herramienta keycloak-config-cli de Bitnami legacy
+    tag: 6.4.0-debian-12-r11                       # Tag de esa imagen
   configuration:
-    demo-realm.yaml: |
-      realm: demo
-      enabled: true
-      displayName: Demo Realm
-      registrationAllowed: false
-      resetPasswordAllowed: true
+    demo-realm.yaml: |          # Nombre del fichero de configuración que recibirá el Job (formato YAML de Keycloak)
+      realm: demo               # Nombre interno del realm (identificador único en Keycloak)
+      enabled: true             # El realm estará activo al crearlo
+      displayName: Demo Realm   # Nombre visible en la UI de Keycloak
+      registrationAllowed: false  # Deshabilita el auto-registro de nuevos usuarios
+      resetPasswordAllowed: true  # Permite a los usuarios resetear su contraseña por email
 
       roles:
-        realm:
-          - name: app-user
-          - name: app-admin
+        realm:                  # Roles a nivel de realm (disponibles para todos los clientes)
+          - name: app-user      # Rol para usuarios normales de la aplicación
+          - name: app-admin     # Rol para administradores de la aplicación
 
-        client:
-          frontend-app:
-            - name: read
-            - name: write
-            - name: admin
-            
+        client:                 # Roles a nivel de cliente (scoped dentro del cliente indicado)
+          frontend-app:         # Nombre del clientId al que pertenecen estos roles
+            - name: read        # Permiso de lectura dentro del cliente
+            - name: write       # Permiso de escritura dentro del cliente
+            - name: admin       # Permiso de administración dentro del cliente
+
       clients:
-        - clientId: frontend-app
-          name: Frontend App
-          enabled: true
-          protocol: openid-connect
-          publicClient: true
-          directAccessGrantsEnabled: true
-          standardFlowEnabled: true
+        - clientId: frontend-app          # Identificador único del cliente OIDC
+          name: Frontend App              # Nombre descriptivo visible en la consola de Keycloak
+          enabled: true                   # El cliente estará activo
+          protocol: openid-connect        # Protocolo de autenticación (OIDC en lugar de SAML)
+          publicClient: true              # Cliente público: no tiene client_secret (SPA / apps móviles)
+          directAccessGrantsEnabled: true # Permite el flujo Resource Owner Password (usuario/contraseña directos)
+          standardFlowEnabled: true       # Habilita el flujo Authorization Code (el estándar para SPAs)
           redirectUris:
-            - "http://localhost:3000/*"
+            - "http://localhost:3000/*"   # URLs a las que Keycloak puede redirigir tras autenticar
           webOrigins:
-            - "+"
-          defaultClientScopes:
-            - profile
-            - email
-            - roles
-          optionalClientScopes:
-            - offline_access
+            - "+"                         # "+" significa: permitir todos los orígenes de redirectUris como CORS
+          defaultClientScopes:            # Scopes incluidos automáticamente en cada token
+            - profile                     # Incluye nombre, apellidos, etc.
+            - email                       # Incluye la dirección de email
+            - roles                       # Incluye los roles del usuario en el token
+          optionalClientScopes:           # Scopes que el cliente puede solicitar opcionalmente
+            - offline_access              # Permite obtener refresh tokens de larga duración (offline)
