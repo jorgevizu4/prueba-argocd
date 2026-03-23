@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
 - ../ejemplo-app/base
 - ../hipstershop/base
-# - ../keycloak/base
+- ../keycloak/base
