@@ -8,7 +8,7 @@ auth:
   adminUser: admin          # Usuario administrador del realm "master" (consola de admin)
   adminPassword: ""          # Se deja vacío para no guardar la contraseña en Git
   existingSecret: keycloak-auth-secret  # Secret existente con la contraseña del admin
-  passwordSecretKey: admin-password     # Key dentro del secret que contiene la contraseña del admin
+  passwordSecretKey: ADMIN_PASSWORD     # Key dentro del secret que contiene la contraseña del admin
 
 # ─── Subchart de PostgreSQL embebido ─────────────────────────────────────────
 postgresql:
@@ -18,8 +18,8 @@ postgresql:
     password: ""           # Se deja vacío para no guardar la contraseña en Git
     existingSecret: keycloak-postgresql-secret  # Secret existente con credenciales de PostgreSQL
     secretKeys:
-      userPasswordKey: password      # Key del password del usuario `username`
-      adminPasswordKey: postgres-password  # Key del password del usuario postgres
+      userPasswordKey: POSTGRES_USER_PASSWORD      # Key del password del usuario `username`
+      adminPasswordKey: POSTGRES_ADMIN_PASSWORD  # Key del password del usuario postgres
     database: keycloakdb   # Nombre de la base de datos que se creará automáticamente al iniciar
   fullnameOverride: postgresql  # Fuerza que el Service de PostgreSQL se llame "postgresql" (sin prefijo del release);
                                 # esto es lo que permite resolver el hostname "postgresql" desde Keycloak
@@ -47,7 +47,7 @@ extraEnvVars:
   valueFrom:
     secretKeyRef:
       name: keycloak-postgresql-secret
-      key: password
+      key: POSTGRES_USER_PASSWORD
 - name: KEYCLOAK_DATABASE_NAME      # Nombre de la base de datos a la que se conectará Keycloak
   value: keycloakdb
 
