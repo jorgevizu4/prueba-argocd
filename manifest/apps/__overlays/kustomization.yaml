@@ -4,4 +4,4 @@ resources:
 - ../ejemplo-app/base
 - ../hipstershop/base
 - ../keycloak/base
-- ../keycloak/lab/secrets.enc.yaml
+- ../keycloak/lab
