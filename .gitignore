@@ -1,1 +1,3 @@
 *.dec.yaml
+_keycloak-secret.yaml
+_keycloak-postgres-secret.yaml
